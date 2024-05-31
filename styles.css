@@ -1,0 +1,151 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background-color: #f5f5f5;
+    color: #333;
+}
+
+.container {
+    width: 80%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header {
+    background-color: #555;
+    color: #fff;
+    padding: 20px 0;
+}
+
+header .left {
+    display: flex;
+    align-items: center;
+}
+
+header .logo {
+    font-size: 24px;
+    font-weight: bold;
+    margin-right: 20px;
+}
+
+header nav ul {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+header nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+header .auth-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+header .auth-buttons a {
+    color: #fff;
+    text-decoration: none;
+    padding: 10px 20px;
+    border: 2px solid #fff;
+    border-radius: 5px;
+}
+
+header .auth-buttons .sign-up {
+    background-color: #000;
+}
+
+.hero {
+    background-color: #666;
+    color: #fff;
+    text-align: center;
+    padding: 100px 0;
+}
+
+.hero h1 {
+    font-size: 36px;
+    margin-bottom: 20px;
+}
+
+.hero button {
+    background-color: #fff;
+    color: #444;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    margin: 0 10px;
+}
+
+.popular-games, .featured-game, .recommended-games, .top-games {
+    margin: 50px 0;
+}
+
+.popular-games h2, .featured-game h2, .recommended-games h2, .top-games h2 {
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+.game-cards {
+    display: flex;
+    gap: 20px;
+}
+
+.game-card {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    padding: 20px;
+    text-align: center;
+}
+
+.game-card .image {
+    background-color: #ddd;
+    height: 150px;
+    margin-bottom: 10px;
+}
+
+.featured-game .game-detail {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.featured-game .game-detail .image {
+    background-color: #ddd;
+    height: 300px;
+    width: 300px;
+}
+
+footer {
+    background-color: #333;
+    color: #fff;
+    padding: 20px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+footer .footer-left {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+footer .footer-right ul {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+footer .footer-right ul li a {
+    color: #fff;
+    text-decoration: none;
+}
