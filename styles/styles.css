@@ -169,6 +169,10 @@ header .auth-buttons .sign-in {
     font-size: 24px;
 }
 
+.featured-game h1 {
+    font-size: 4em;
+}
+
 .game-cards {
     display: flex;
     justify-content: space-between;
@@ -262,8 +266,10 @@ header .auth-buttons .sign-in {
 
 .featured-game .game-detail .image {
     background-color: #ddd;
-    height: 300px;
-    width: 300px;
+    height: 40vh;
+    width: 30vw;
+    border-radius: 14px;
+    margin-left: 1rem;
 }
 
 .featured-game .game-detail .text-content {
@@ -274,7 +280,7 @@ header .auth-buttons .sign-in {
 }
 
 .featured-game .game-detail .text-content h2 {
-    font-size: 24px;
+    font-size: 3rem;
     margin-bottom: 10px;
 }
 
