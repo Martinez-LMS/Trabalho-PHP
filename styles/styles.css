@@ -12,7 +12,6 @@ a {
 }
 
 body {
-    background-color: #f5f5f5;
     color: #333;
 }
 
@@ -27,7 +26,7 @@ body {
 header {
     background-color: #555;
     color: #fff;
-    padding: 20px 0;
+    padding: 0.5rem 0;
 }
 
 header .left {
@@ -71,12 +70,12 @@ header .auth-buttons {
 header .auth-buttons a {
     color: #fff;
     text-decoration: none;
-    padding: 10px 20px;
-    border: 2px solid #fff;
+    padding: 0.4rem 0.4rem;
     border-radius: 5px;
 }
 
 header .auth-buttons .sign-up {
+    border: none;
     background-color: #000;
 }
 
@@ -86,62 +85,82 @@ header .auth-buttons .sign-in {
 }
 
 .hero {
-    background-color: #666;
+    position: relative;
+    height: 65vh;
+    overflow: hidden;
     color: #fff;
-    text-align: center;
-    padding: 10px 0;
     display: flex;
-    flex-direction: row-reverse;
-    justify-content: space-around;
+    align-items: center;
+    justify-content: flex-start;
+    text-align: left;
 }
 
-.hero iframe {
-    width: 40rem;
-    height: 20em;
-    margin-right: 5rem;
+.video-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
 }
 
-@media screen and (min-width: 1024px) {
-    .hero iframe {
-        width: 60rem;
-        height: 30em;
-    }
+.video-container iframe {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: auto;
+    min-width: 60%;
+    height: 100%;
+    pointer-events: none; 
 }
 
 .hero-content {
-    max-width: 50%;
-    text-align: left;
-    padding: 0 0 0 5rem;
+    position: relative;
+    z-index: 1;
+    max-width: 80%;
+    padding: 20px;
+    background: linear-gradient(to right, rgba(0, 0, 0, 1) 50%, transparent 100%);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
+
+
 .hero-content h1 {
-    font-size: 2em;
-    width: 100%;
-    padding: 6rem 0 3rem 0;
+    padding-left: 10%;
+    width: 50%;
+    font-size: 2.5em;
+    margin-bottom: 20px;
 }
 
 .hero-content p {
-    font-size: 16px;
+    padding-left: 10%;
+    width: 50%;
+    font-size: 1em;
     line-height: 1.5;
     margin-bottom: 20px;
 }
 
 .hero-buttons-conteiner {
     display: flex;
-    justify-content: flex-start;
+    padding-left: 15%;
     gap: 10px;
 }
 
-.hero-buttons-conteiner button {
+.hero-btn-vermais,
+.hero-btn-confira {
     background-color: #000;
+    border: 2px solid #fff;
     color: #fff;
-    border: none;
     padding: 10px 20px;
     border-radius: 5px;
     cursor: pointer;
 }
 
-.hero-buttons-conteiner button:hover {
+.hero-btn-vermais:hover,
+.hero-btn-confira:hover {
     background-color: #444;
 }
 
@@ -161,12 +180,16 @@ header .auth-buttons .sign-in {
 }
 
 .popular-games, .featured-game, .recommended-games, .top-games {
-    margin: 50px 0;
+    padding: 5rem 0;
 }
 
 .popular-games h2, .featured-game h2, .recommended-games h2, .top-games h2 {
     margin-bottom: 20px;
     font-size: 24px;
+}
+
+.popular-games {
+    background-color: #F2F2F2;
 }
 
 .featured-game h1 {
@@ -305,6 +328,38 @@ header .auth-buttons .sign-in {
 .featured-game .game-detail .text-content .buttons button:hover {
     background-color: #000;
     color: #fff;
+}
+
+.recommended-games .game-cards {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.recommended-games .game-card {
+    width: calc(33.33% - 13.33px); /* Ajusta a largura dos cards para caber na linha */
+}
+
+.recommended-games .container {
+    width: 80%;
+    margin: 0 auto;
+}
+
+.recommended-games h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+.top-games .container {
+    width: 80%;
+    margin: 0 auto;
+}
+
+.top-games h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 24px;
 }
 
 footer {
