@@ -236,6 +236,7 @@ header .auth-buttons .sign-in {
     width: 15rem;
     position: relative;
     box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    overflow: hidden; /* Garante que qualquer conteúdo extra seja cortado dentro do card */
 }
 
 .game-card:hover {
@@ -267,7 +268,11 @@ header .auth-buttons .sign-in {
 .game-card .heart-circle:hover img {
     opacity: 1;
 }
-
+.game-card .image img {
+    max-width: 100%; /* Ajusta a largura máxima da imagem para 100% do seu contêiner (.image) */
+    height: auto; /* Mantém a proporção da imagem */
+    display: block; /* Garante que a imagem não tenha espaços em branco abaixo dela */
+}
 .game-card .image {
     background-color: #C4C4C4;
     height: 12rem;

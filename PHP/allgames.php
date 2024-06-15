@@ -20,14 +20,13 @@
             <?php foreach ($jogos as $jogo): ?>
                 <div class="game-card">
                     <div class="heart-circle">
-                        <img src="<?php echo $jogo['imagem']; ?>" alt="<?php echo $jogo['titulo']; ?>">
+                        <img src="" alt="<?php echo $jogo['name']; ?>" >
                     </div>                        
                     <div class="image">
-                        <!-- Se houver uma imagem específica do jogo, você pode adicioná-la aqui -->
-                        <!-- Exemplo: <img src="<?php echo $jogo['imagem']; ?>" alt="<?php echo $jogo['titulo']; ?>"> -->
+                        <img src="<?php echo $jogo['imageUrl']; ?>" alt="<?php echo $jogo['name']; ?>">
                     </div>
-                    <div class="title"><?php echo $jogo['titulo']; ?></div>
-                    <div class="desc"><?php echo $jogo['descricao']; ?></div>
+                    <div class="title"><?php echo $jogo['name']; ?></div>
+                    <div class="desc"><?php echo $jogo['description	']; ?></div>
                 </div>
             <?php endforeach; ?>
         </div>
