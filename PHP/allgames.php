@@ -26,7 +26,7 @@
                         <img src="<?php echo $jogo['imageUrl']; ?>" alt="<?php echo $jogo['name']; ?>">
                     </div>
                     <div class="title"><?php echo $jogo['name']; ?></div>
-                    <div class="desc"><?php echo $jogo['description	']; ?></div>
+                    <div class="desc"><?php echo $jogo['description']; ?></div>
                 </div>
             <?php endforeach; ?>
         </div>

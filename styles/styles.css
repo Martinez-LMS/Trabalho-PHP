@@ -269,16 +269,18 @@ header .auth-buttons .sign-in {
     opacity: 1;
 }
 .game-card .image img {
-    max-width: 100%; /* Ajusta a largura máxima da imagem para 100% do seu contêiner (.image) */
-    height: auto; /* Mantém a proporção da imagem */
-    display: block; /* Garante que a imagem não tenha espaços em branco abaixo dela */
+    max-width: 10%; 
+    display: block; 
+    transition: transform 0.3s ease; 
+    object-fit: contain;
 }
 .game-card .image {
     background-color: #C4C4C4;
+    width: 10px;
     height: 12rem;
     margin-bottom: 10px;
     border-radius: 10px 10px 0 0;
-    cursor: pointer;
+    overflow: hidden; 
 }
 
 .game-card .title {
@@ -301,7 +303,7 @@ header .auth-buttons .sign-in {
     border-radius: 5px;
     cursor: pointer;
     margin: 10px;
-    margin-top: 0; /* Ajuste para espaçamento uniforme */
+    margin-top: 0; 
     display: block;
     width: calc(100% - 20px);
     box-sizing: border-box;
