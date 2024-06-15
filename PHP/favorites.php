@@ -4,34 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Favoritos - GameHub</title>
-    <link rel="stylesheet" href="/styles/styles.css">
+    <link rel="stylesheet" href="../../Trabalho-PHP/styles/login-styles.css">
+    <link rel="stylesheet" href="../../Trabalho-PHP/styles/styles.css">
 </head>
 <body>
-    <header>
-        <div class="container">
-            <div class="left">
-                <div class="logo">
-                    <a href="/">
-                        <img src="assets/logo.png" alt="logo">
-                    </a>
-                    <a href="">
-                        <h1>GAMEHUB</h1>
-                    </a>
-                </div>
-                <nav>
-                    <ul>
-                        <li><a href="#">Home</a></li>
-                        <li><a href="PHP/allgames.html">Jogos</a></li>
-                        <li><a href="#">Favoritos</a></li> <!-- Adicionado link para Favoritos -->
-                    </ul>
-                </nav>
-            </div>
-            <div class="auth-buttons">
-                <a href="PHP/login.html" class="sign-in">Sign In</a>
-                <a href="#" class="sign-up">Sign Up</a>
-            </div>
-        </div>
-    </header>
+    <?php require_once "PHP/header.php"; ?>
+
     
     <main>
         <section class="favorite-games">
