@@ -10,8 +10,7 @@
 </head>
 
 <body>
-    <?php $_POST = array(); ?>
-    <?php require_once "../PHP/header.php"; ?>
+   <?php require_once "../PHP/header.php"; ?>
 
 
     <main>
