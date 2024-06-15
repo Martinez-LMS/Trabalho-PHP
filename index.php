@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GameHub</title>
     <link rel="stylesheet" href="../Trabalho-PHP/styles/styles.css">
+    <link rel="stylesheet" href="../../Trabalho-PHP/styles/gameCard.css">
 </head>
 <body>
 <?php require_once "PHP/header.php"; ?>

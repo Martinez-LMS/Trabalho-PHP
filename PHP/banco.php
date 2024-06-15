@@ -41,4 +41,15 @@ function buscaJogos() : array
 
     return $jogos;
 }
+
+function buscaJogoPorId($id) : object
+{
+    global $banco;
+
+    $q = "SELECT * FROM GAMES WHERE ID = $id";
+    $gameResult = $banco->query($q);
+
+    return $gameResult->fetch_object();
+}
+
 ?>
