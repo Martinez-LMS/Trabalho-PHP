@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,14 +8,20 @@
     <link rel="stylesheet" href="../../Trabalho-PHP/styles/login-styles.css">
     <link rel="stylesheet" href="../../Trabalho-PHP/styles/styles.css">
 </head>
+
 <body>
-<?php require_once "../PHP/header.php"; ?>
+    <?php
+    if (session_status() == PHP_SESSION_NONE) {
+        session_start();
+    }
+    require_once "../PHP/header.php"; 
+    ?>
 
     <main>
         <div class="container1">
             <div class="login-box">
                 <h2>Login</h2>
-                <form action="login.php" method="post">
+                <form action="login.php" method="post" id="loginForm">
                     <div class="user-box">
                         <input type="text" name="username" required>
                         <label>Usuário</label>
@@ -30,16 +37,46 @@
                         <span></span>
                         Entrar
                     </a>
-                    <?php
-                    function processaFormulario() {
-                        // Função vazia apenas para ser executada quando o formulário é enviado
+                </form>
+
+                <?php
+                function processaFormulario()
+                {
+                    require_once "banco.php";
+
+                    if (isset($_SESSION['usuario'])) {
+                        exit;
                     }
 
-                    if ($_SERVER["REQUEST_METHOD"] === "POST") {
-                        processaFormulario(); // Chamada da função vazia
+                    $u = $_POST["username"] ?? null;
+                    $s = $_POST["password"] ?? null;
+
+                    if ($u && $s) {
+                        $u = $banco->real_escape_string($u);
+
+                        $q = "SELECT usuario, nome, senha FROM usuarios WHERE usuario='$u'";
+                        $busca = $banco->query($q);
+
+                        if ($busca && $busca->num_rows > 0) {
+                            $usu = $busca->fetch_object();
+
+                            if (password_verify($s, $usu->senha)) {
+                                $_SESSION['usuario'] = $usu->usuario;
+                                $_SESSION['nome'] = $usu->nome;
+                                echo "<p>Login bem-sucedido. Bem-vindo, {$usu->nome}!</p>";
+                            } else {
+                                echo "<p>Senha Inválida</p>";
+                            }
+                        } else {
+                            echo "<p>Usuário não encontrado</p>";
+                        }
                     }
-                    ?>
-                </form>
+                }
+
+                if ($_SERVER["REQUEST_METHOD"] === "POST") {
+                    processaFormulario();
+                }
+                ?>
             </div>
         </div>
     </main>
@@ -59,4 +96,5 @@
         </div>
     </footer>
 </body>
+
 </html>
