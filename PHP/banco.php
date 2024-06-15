@@ -1,7 +1,6 @@
-
-
 <?php
 $banco = new mysqli("localhost:3306", "root", "", "gamehub");
+
 function createOnDB($into, $values)
 {
     global $banco;
@@ -15,7 +14,7 @@ function criarUsuario(string $email, string $username, string $password, $debug 
 
     $password = password_hash($password, PASSWORD_DEFAULT);
 
-    $q = "INSERT INTO users ( email, username, password) VALUES ( '$email', '$username', '$password')";
+    $q = "INSERT INTO users (email, username, password) VALUES ('$email', '$username', '$password')";
 
     $resp = $banco->query($q);
 
@@ -24,5 +23,22 @@ function criarUsuario(string $email, string $username, string $password, $debug 
         echo var_dump($resp);
     }
 }
-?>
 
+function buscaJogos() : array 
+{
+    global $banco;
+
+    $q = "SELECT * FROM games";
+    $result = $banco->query($q);
+
+    $jogos = array();
+
+    if ($result && $result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $jogos[] = $row; 
+        }
+    }
+
+    return $jogos;
+}
+?>

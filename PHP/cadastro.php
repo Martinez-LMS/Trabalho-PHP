@@ -11,8 +11,6 @@
 
 <body>
    <?php require_once "../PHP/header.php"; ?>
-
-
     <main>
         <div class="container1">
             <div class="login-box">

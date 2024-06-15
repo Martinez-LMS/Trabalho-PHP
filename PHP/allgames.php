@@ -8,44 +8,29 @@
 </head>
 <body>
     <?php require_once "../PHP/header.php"; ?>
+    
+    <?php
+    require_once "banco.php";
+
+    $jogos = buscaJogos();
+    ?>
 
     <main>
         <div class="game-cards-all">
-            <div class="game-card">
-                <div class="heart-circle">
-                    <img src="" alt="">
-                </div>                        
-                <div class="image"></div>
-                <div class="title">Image Title</div>
-                <div class="desc">Description</div>
-            </div>
-            <div class="game-card">
-                <div class="heart-circle">
-                    <img src="" alt="">
-                </div>                        
-                <div class="image"></div>
-                <div class="title">Image Title</div>
-                <div class="desc">Description</div>
-            </div>
-            <div class="game-card">
-                <div class="heart-circle">
-                    <img src="" alt="">
-                </div>                        
-                <div class="image"></div>
-                <div class="title">Image Title</div>
-                <div class="desc">Description</div>
-            </div>
-            <div class="game-card">
-                <div class="heart-circle">
-                    <img src="" alt="">
-                </div>                        
-                <div class="image"></div>
-                <div class="title">Image Title</div>
-                <div class="desc">Description</div>
-            </div>
+            <?php foreach ($jogos as $jogo): ?>
+                <div class="game-card">
+                    <div class="heart-circle">
+                        <img src="<?php echo $jogo['imagem']; ?>" alt="<?php echo $jogo['titulo']; ?>">
+                    </div>                        
+                    <div class="image">
+                        <!-- Se houver uma imagem específica do jogo, você pode adicioná-la aqui -->
+                        <!-- Exemplo: <img src="<?php echo $jogo['imagem']; ?>" alt="<?php echo $jogo['titulo']; ?>"> -->
+                    </div>
+                    <div class="title"><?php echo $jogo['titulo']; ?></div>
+                    <div class="desc"><?php echo $jogo['descricao']; ?></div>
+                </div>
+            <?php endforeach; ?>
         </div>
-    </div>
-</section>
     </main>
 </body>
 </html>
