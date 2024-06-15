@@ -4,15 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GameHub - Login</title>
-    <link rel="stylesheet" href="../../Trabalho-PHP/styles/login-styles.css">
-    <link rel="stylesheet" href="../../Trabalho-PHP/styles/styles.css">
-
-
+    <title>GameHub - Cadastro</title>
+    <link rel="stylesheet" href="../styles/login-styles.css">
+    <link rel="stylesheet" href="../styles/styles.css">
 </head>
 
 <body>
-<?php require_once "PHP/header.php"; ?>
+    <?php $_POST = array(); ?>
+    <?php require_once "../PHP/header.php"; ?>
 
 
     <main>
@@ -21,33 +20,43 @@
                 <h2>Cadastro</h2>
                 <form action="" method="post">
                     <div class="user-box">
-                        <input type="text" name="usuario" required>
+                        <input type="text" name="username" required>
                         <label>Usuário</label>
                     </div>
                     <div class="user-box">
-                        <input type="text" name="nome" required>
-                        <label>Nome</label>
+                        <input type="email" name="email" required>
+                        <label>Email</label>
                     </div>
                     <div class="user-box">
-                        <input type="password" name="senha" required>
+                        <input type="password" name="password" required>
                         <label>Senha</label>
                     </div>
-                    <input type="submit" value="Criar">
-                    <?php
-                    require_once "banco.php";
+                    <a href="#" onclick="document.forms[0].submit(); return false;">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        Cadastrar
+                    </a>
+                </form>
+                <?php
+                require_once "banco.php";
 
-                    $usu = $_POST["usuario"] ?? null;
-                    $nom = $_POST["nome"] ?? null;
-                    $sen = $_POST["senha"] ?? null;
 
-                    if (is_null($usu) || is_null($nom) || is_null($sen)) {
+                if ($_SERVER["REQUEST_METHOD"] === "POST") {
+                    $usu = $_POST["username"] ?? null;
+                    $nom = $_POST["email"] ?? null;
+                    $sen = $_POST["password"] ?? null;
+
+                    if (empty($usu) || empty($nom) || empty($sen)) {
                         echo "<p>Por favor preencha todos os campos</p>";
                     } else {
                         criarUsuario($usu, $nom, $sen);
-                        echo "<p>Usuario criado com sucesso!</p>";
+                        echo "<p>Usuário criado com sucesso!</p>";
+                        $_POST = array();
                     }
-                    ?>
-                </form>
+                }
+                ?>
             </div>
         </div>
     </main>

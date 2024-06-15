@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="../../Trabalho-PHP/styles/styles.css">
 </head>
 <body>
-    <?php require_once "PHP/header.php"; ?>
+<?php require_once "../PHP/header.php"; ?>
 
     
     <main>

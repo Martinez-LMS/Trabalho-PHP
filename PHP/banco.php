@@ -1,7 +1,7 @@
-<pre>
+
 
 <?php
-$banco = new mysqli("localhost:3307", "root", "", "trabalhoPHP");
+$banco = new mysqli("localhost:3306", "root", "", "gamehub");
 function createOnDB($into, $values)
 {
     global $banco;
@@ -9,13 +9,13 @@ function createOnDB($into, $values)
     $banco->query($q);
 }
 
-function criarUsuario(string $usuario, string $nome, string $senha, $debug = false): void
+function criarUsuario(string $email, string $username, string $password, $debug = false): void
 {
     global $banco;
 
-    $senha = password_hash($senha, PASSWORD_DEFAULT);
+    $password = password_hash($password, PASSWORD_DEFAULT);
 
-    $q = "INSERT INTO usuarios(cod, usuario, nome, senha) VALUES (NULL, '$usuario', '$nome', '$senha')";
+    $q = "INSERT INTO users ( email, username, password) VALUES ( '$email', '$username', '$password')";
 
     $resp = $banco->query($q);
 
@@ -26,4 +26,3 @@ function criarUsuario(string $usuario, string $nome, string $senha, $debug = fal
 }
 ?>
 
-</pre>

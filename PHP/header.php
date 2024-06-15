@@ -13,7 +13,7 @@
                 <nav>
                     <ul>
                         <li><a href="/">Home</a></li>
-                        <li><a href="../../Trabalho-PHP/PHP/allgames.html">Jogos</a></li>
+                        <li><a href="../../Trabalho-PHP/PHP/allgames.php">Jogos</a></li>
                     </ul>
                 </nav>
             </div>
