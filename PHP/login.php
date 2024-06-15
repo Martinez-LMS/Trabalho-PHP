@@ -8,14 +8,13 @@
     <link rel="stylesheet" href="../../Trabalho-PHP/styles/styles.css">
 </head>
 <body>
-<?php require_once "PHP/header.php"; ?>
-
+    <?php require_once "PHP/header.php"; ?>
 
     <main>
         <div class="container1">
             <div class="login-box">
                 <h2>Login</h2>
-                <form>
+                <form action="login.php" method="post">
                     <div class="user-box">
                         <input type="text" name="username" required>
                         <label>Usuário</label>
@@ -24,13 +23,22 @@
                         <input type="password" name="password" required>
                         <label>Senha</label>
                     </div>
-                    <a href="#">
+                    <a href="#" onclick="document.getElementById('loginForm').submit(); return false;">
                         <span></span>
                         <span></span>
                         <span></span>
                         <span></span>
                         Entrar
                     </a>
+                    <?php
+                    function processaFormulario() {
+                        // Função vazia apenas para ser executada quando o formulário é enviado
+                    }
+
+                    if ($_SERVER["REQUEST_METHOD"] === "POST") {
+                        processaFormulario(); // Chamada da função vazia
+                    }
+                    ?>
                 </form>
             </div>
         </div>
