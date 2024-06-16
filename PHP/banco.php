@@ -8,13 +8,13 @@ function createOnDB($into, $values)
     $banco->query($q);
 }
 
-function criarUsuario(string $email, string $username, string $password, $debug = false): void
+function criarUsuario(string $username , string $email, string $password, $debug = false): void
 {
     global $banco;
 
     $password = password_hash($password, PASSWORD_DEFAULT);
 
-    $q = "INSERT INTO users (email, username, password) VALUES ('$email', '$username', '$password')";
+    $q = "INSERT INTO users (username, email, password) VALUES ('$username', '$email', '$password')";
 
     $resp = $banco->query($q);
 

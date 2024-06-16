@@ -23,8 +23,8 @@
                 <h2>Login</h2>
                 <form action="login.php" method="post" id="loginForm">
                     <div class="user-box">
-                        <input type="text" name="username" required>
-                        <label>Usuário</label>
+                        <input type="email" name="email" required>
+                        <label>Email</label>
                     </div>
                     <div class="user-box">
                         <input type="password" name="password" required>
@@ -45,25 +45,25 @@
                     require_once "banco.php";
 
                     if (isset($_SESSION['usuario'])) {
-                        exit;
+                        return;
                     }
 
-                    $u = $_POST["username"] ?? null;
+                    $e = $_POST["email"] ?? null;
                     $s = $_POST["password"] ?? null;
 
-                    if ($u && $s) {
-                        $u = $banco->real_escape_string($u);
+                    if ($e && $s) {
+                        $e = $banco->real_escape_string($e);
 
-                        $q = "SELECT usuario, nome, senha FROM usuarios WHERE usuario='$u'";
+                        $q = "SELECT email, password, username, id FROM users WHERE email='$e'";
                         $busca = $banco->query($q);
 
                         if ($busca && $busca->num_rows > 0) {
                             $usu = $busca->fetch_object();
 
-                            if (password_verify($s, $usu->senha)) {
-                                $_SESSION['usuario'] = $usu->usuario;
-                                $_SESSION['nome'] = $usu->nome;
-                                echo "<p>Login bem-sucedido. Bem-vindo, {$usu->nome}!</p>";
+                            if (password_verify($s, $usu->password)) {
+                                $_SESSION['usuario'] = $usu->id;
+                                $_SESSION['nome'] = $usu->username;
+                                echo "<p>Login bem-sucedido. Bem-vindo, {$usu->username}!</p>";
                             } else {
                                 echo "<p>Senha Inválida</p>";
                             }

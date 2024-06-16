@@ -6,6 +6,7 @@
     <title>Document</title>
     <link rel="stylesheet" href="../../Trabalho-PHP/styles/styles.css">
     <link rel="stylesheet" href="../../Trabalho-PHP/styles/gameCard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
     <?php require_once "../PHP/header.php"; ?>
@@ -21,7 +22,7 @@
             <?php foreach ($jogos as $jogo): ?>
                 <div class="game-card">
                     <div class="heart-circle">
-                        <img src="path/to/heart-icon.png" alt="Favorite">
+                        <i class="fa-regular fa-heart" style="color: red;"></i>
                     </div>
                     <div class="image">
                         <img src="<?php echo $jogo['imageUrl']; ?>" alt="<?php echo $jogo['name']; ?>">
