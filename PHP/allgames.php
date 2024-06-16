@@ -37,5 +37,19 @@
             <?php endforeach; ?>
         </div>
     </main>
+    <footer>
+        <div class="container">
+            <div class="footer-left">
+                <div class="logo">GameHub</div>
+                <p>All right reserved &copy; GameHub 2024</p>
+            </div>
+            <div class="footer-right">
+                <ul>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
 </body>
 </html>

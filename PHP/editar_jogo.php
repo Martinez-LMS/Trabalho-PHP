@@ -1,9 +1,47 @@
+<?php
+require_once "banco.php";
+
+if (isset($_GET['id'])) {
+    $id = $_GET['id'];
+
+    $jogo = buscarJogoPorId($id);
+
+    if (!$jogo) {
+        echo "<p>Jogo não encontrado.</p>";
+        exit;
+    }
+} else {
+    echo "<p>ID do jogo não especificado.</p>";
+    exit;
+}
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $name = $_POST["name"];
+    $price = $_POST["price"];
+    $description = $_POST["description"];
+    $imageUrl = $_POST["imageUrl"];
+    $videoUrl = $_POST["videoUrl"];
+    $producer = $_POST["producer"];
+    $language = $_POST["language"];
+    $isHero = isset($_POST["isHero"]) ? 1 : 0;
+    $isFeatured = isset($_POST["isFeatured"]) ? 1 : 0;
+
+    if (atualizarJogo($id, $name, $description, $imageUrl, $videoUrl, $price, $producer, $language, $isHero, $isFeatured)) {
+        echo "<p>Jogo atualizado com sucesso!</p>";
+    } else {
+        echo "<p>Erro ao atualizar jogo.</p>";
+    }
+
+    $jogo = buscarJogoPorId($id);
+}
+?>
+
 <!DOCTYPE html>
 <html lang="pt">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GameHub - Cadastrar Jogo</title>
+    <title>Editar Jogo - GameHub</title>
     <link rel="stylesheet" href="../../Trabalho-PHP/styles/styles.css">
     <link rel="stylesheet" href="../../Trabalho-PHP/styles/gameCard.css">
     <style>
@@ -79,37 +117,38 @@
 <main>
     <section class="form-section">
         <div class="container">
-            <form action="cadastrar_jogo.php" method="POST">
+            <h2 class="title">Editar Jogo - <?php echo htmlspecialchars($jogo['name']); ?></h2>
+            <form action="editar_jogo.php?id=<?php echo $jogo['id']; ?>" method="POST">
                 <div class="form-group">
                     <label for="name">Nome do Jogo</label>
                     <label for="price">Preço</label>
-                    <input type="text" id="name" name="name" required>
-                    <input type="number" id="price" name="price" required>
+                    <input type="text" id="name" name="name" value="<?php echo htmlspecialchars($jogo['name']); ?>" required>
+                    <input type="number" id="price" name="price" value="<?php echo htmlspecialchars($jogo['price']); ?>" required>
                 </div>
                 <div class="form-group">
                     <label for="description">Descrição</label>
-                    <textarea id="description" name="description" required></textarea>
+                    <textarea id="description" name="description" required><?php echo htmlspecialchars($jogo['description']); ?></textarea>
                 </div>
                 <div class="form-group">
                     <label for="imageUrl">URL da Imagem</label>
                     <label for="videoUrl">URL do Vídeo</label>
-                    <input type="text" id="imageUrl" name="imageUrl" required>
-                    <input type="text" id="videoUrl" name="videoUrl" required>
+                    <input type="text" id="imageUrl" name="imageUrl" value="<?php echo htmlspecialchars($jogo['imageUrl']); ?>" required>
+                    <input type="text" id="videoUrl" name="videoUrl" value="<?php echo htmlspecialchars($jogo['videoUrl']); ?>" required>
                 </div>
                 <div class="form-group">
                     <label for="producer">Produtor</label>
                     <label for="language">Idioma</label>
-                    <input type="text" id="producer" name="producer" required>
-                    <input type="text" id="language" name="language" required>
+                    <input type="text" id="producer" name="producer" value="<?php echo htmlspecialchars($jogo['producer']); ?>" required>
+                    <input type="text" id="language" name="language" value="<?php echo htmlspecialchars($jogo['language']); ?>" required>
                 </div>
                 <div class="form-group">
                     <label for="isHero">Destacar na Hero Section?</label>
                     <label for="isFeatured">Destacar na Seção em Destaque?</label>
-                    <input type="checkbox" id="isHero" name="isHero" value="1">
-                    <input type="checkbox" id="isFeatured" name="isFeatured" value="1">
+                    <input type="checkbox" id="isHero" name="isHero" value="1" <?php echo $jogo['isHero'] ? 'checked' : ''; ?>>
+                    <input type="checkbox" id="isFeatured" name="isFeatured" value="1" <?php echo $jogo['isFeatured'] ? 'checked' : ''; ?>>
                 </div>
                 <div class="form-actions">
-                    <button type="submit" class="hero-btn-confira">Cadastrar</button>
+                    <button type="submit" class="hero-btn-confira">Atualizar</button>
                 </div>
             </form>
         </div>
@@ -132,26 +171,3 @@
 </footer>
 </body>
 </html>
-
-<?php
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    require_once "banco.php";
-
-    $name = $_POST["name"];
-    $description = $_POST["description"];
-    $imageUrl = $_POST["imageUrl"];
-    $videoUrl = $_POST["videoUrl"];
-    $price = $_POST["price"];
-    $producer = $_POST["producer"];
-    $language = $_POST["language"];
-    $isHero = isset($_POST["isHero"]) ? 1 : 0;
-    $isFeatured = isset($_POST["isFeatured"]) ? 1 : 0;
-
-    if (cadastrarJogo($name, $description, $imageUrl, $videoUrl, $price, $producer, $language, $isHero, $isFeatured)) {
-        echo "<p>Jogo cadastrado com sucesso!</p>";
-    } else {
-        echo "<p>Erro ao cadastrar jogo.</p>";
-    }
-}
-?>
-

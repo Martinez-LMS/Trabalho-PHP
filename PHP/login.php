@@ -54,7 +54,7 @@
                     if ($e && $s) {
                         $e = $banco->real_escape_string($e);
 
-                        $q = "SELECT email, password, username, id FROM users WHERE email='$e'";
+                        $q = "SELECT email, password, username, id, isAdmin FROM users WHERE email='$e'";
                         $busca = $banco->query($q);
 
                         if ($busca && $busca->num_rows > 0) {
@@ -63,6 +63,8 @@
                             if (password_verify($s, $usu->password)) {
                                 $_SESSION['usuario'] = $usu->id;
                                 $_SESSION['nome'] = $usu->username;
+                                $_SESSION['admin'] = $usu->isAdmin;
+                                echo "{$usu->isAdmin}, adiministrador";
                                 echo "<p>Login bem-sucedido. Bem-vindo, {$usu->username}!</p>";
                             } else {
                                 echo "<p>Senha Inválida</p>";

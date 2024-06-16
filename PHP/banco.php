@@ -42,14 +42,89 @@ function buscaJogos() : array
     return $jogos;
 }
 
-function buscaJogoPorId($id) : object
+function buscarJogoPorId($id) {
+    global $banco;
+
+    $id = $banco->real_escape_string($id);
+    $q = "SELECT * FROM games WHERE id = $id";
+    $result = $banco->query($q);
+
+    if ($result && $result->num_rows > 0) {
+        return $result->fetch_assoc();
+    } else {
+        return null; 
+    }
+}
+
+function cadastrarJogo($name, $description, $imageUrl, $videoUrl, $price, $producer, $language, $isHero, $isFeatured)
 {
     global $banco;
 
-    $q = "SELECT * FROM GAMES WHERE ID = $id";
-    $gameResult = $banco->query($q);
+    $name = $banco->real_escape_string($name);
+    $description = $banco->real_escape_string($description);
+    $imageUrl = $banco->real_escape_string($imageUrl);
+    $videoUrl = $banco->real_escape_string($videoUrl);
+    $price = $banco->real_escape_string($price);
+    $producer = $banco->real_escape_string($producer);
+    $language = $banco->real_escape_string($language);
+    $isHero = $isHero ? 1 : 0; 
+    $isFeatured = $isFeatured ? 1 : 0; 
 
-    return $gameResult->fetch_object();
+    $query = "INSERT INTO games (name, description, imageUrl, videoUrl, price, producer, language, isHero, isFeatured) 
+              VALUES ('$name', '$description', '$imageUrl', '$videoUrl', '$price', '$producer', '$language', '$isHero', '$isFeatured')";
+
+    if ($banco->query($query) === TRUE) {
+        return true; 
+    } else {
+        return false; 
+    }
 }
 
+function atualizarJogo($id, $name, $description, $imageUrl, $videoUrl, $price, $producer, $language, $isHero, $isFeatured)
+{
+    global $banco;
+
+    $id = $banco->real_escape_string($id);
+    $name = $banco->real_escape_string($name);
+    $description = $banco->real_escape_string($description);
+    $imageUrl = $banco->real_escape_string($imageUrl);
+    $videoUrl = $banco->real_escape_string($videoUrl);
+    $price = $banco->real_escape_string($price);
+    $producer = $banco->real_escape_string($producer);
+    $language = $banco->real_escape_string($language);
+    $isHero = $isHero ? 1 : 0; 
+    $isFeatured = $isFeatured ? 1 : 0; 
+
+    $query = "UPDATE games SET 
+              name = '$name', 
+              description = '$description', 
+              imageUrl = '$imageUrl', 
+              videoUrl = '$videoUrl', 
+              price = '$price', 
+              producer = '$producer', 
+              language = '$language', 
+              isHero = '$isHero', 
+              isFeatured = '$isFeatured' 
+              WHERE id = '$id'";
+
+    if ($banco->query($query) === TRUE) {
+        return true; 
+    } else {
+        return false;
+    }
+}
+
+
+function deletarJogo($id) : void
+{
+    global $banco;
+
+    $id = $banco->real_escape_string($id);
+
+    $q = "DELETE FROM games WHERE id = $id";
+    $banco->query($q);
+
+    header("Location: ../../area_admin.php");
+    exit;
+}
 ?>
