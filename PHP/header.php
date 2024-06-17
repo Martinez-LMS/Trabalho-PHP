@@ -19,7 +19,7 @@ if (session_status() == PHP_SESSION_NONE) {
                 <ul>
                     <li><a href="/">Home</a></li>
                     <li><a href="../../Trabalho-PHP/PHP/allgames.php">Jogos</a></li>
-                    <?php 
+                    <?php
                     if (isset($_SESSION['admin']) && isset($_SESSION['admin']) == 1) {
                         echo '<li><a href="../../Trabalho-PHP/PHP/area_admin.php">Admin Area</a></li>';
                     }
@@ -32,6 +32,9 @@ if (session_status() == PHP_SESSION_NONE) {
             if (isset($_SESSION['usuario'])) {
                 echo '<a href="../../Trabalho-PHP/PHP/logout.php" class="sign-out">Log-out</a>';
                 echo '<span class="user-name">' . htmlspecialchars($_SESSION['nome']) . '</span>';
+                echo ' <div>
+                        <a href ="../../Trabalho-PHP/PHP/favorites.php" class="fa-regular fa-heart" style="color: red;" ></a>
+                    </div>';
             } else {
                 echo '<a href="../../Trabalho-PHP/PHP/login.php" class="sign-in">Sign In</a>';
                 echo '<a href="../../Trabalho-PHP/PHP/cadastro.php" class="sign-up">Sign Up</a>';

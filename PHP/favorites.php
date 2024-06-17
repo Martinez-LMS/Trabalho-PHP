@@ -1,35 +1,48 @@
 <!DOCTYPE html>
 <html lang="pt">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Favoritos - GameHub</title>
     <link rel="stylesheet" href="../../Trabalho-PHP/styles/login-styles.css">
     <link rel="stylesheet" href="../../Trabalho-PHP/styles/styles.css">
+    <link rel="stylesheet" href="../../Trabalho-PHP/styles/gameCard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
-<body>
-<?php require_once "../PHP/header.php"; ?>
 
-    
+<body>
+    <?php require_once "../PHP/header.php"; ?>
+
+
+
+    <?php
+    require_once "banco.php";
+
+    $jogos = buscaJogos();
+    ?>
+    <div class="game-cards">
+        <h1>Meus Jogos Favoritos</h1>
+    </div>
+
     <main>
-        <section class="favorite-games">
-            <div class="container">
-                <h2>Jogos Favoritos</h2>
-                <div class="game-cards">
-                    <!-- Exemplo de jogo favorito -->
-                    <div class="game-card">
-                        <div class="heart-circle">
-                            <img src="" alt="">
-                        </div>                        
-                        <div class="image"></div>
-                        <div class="title">Nome do Jogo Favorito</div>
-                        <div class="desc">Descrição do Jogo Favorito</div>
+        <div class="game-cards">
+
+            <?php foreach ($jogos as $jogo): ?>
+                <div class="game-card">
+                    <div class="image">
+                        <img src="<?php echo $jogo['imageUrl']; ?>" alt="<?php echo $jogo['name']; ?>">
                     </div>
+                    <div class="title"><?php echo $jogo['name']; ?></div>
+                    <div class="desc"><?php echo $jogo['description']; ?></div>
+                    <form action="gameDetail.php" method="GET">
+                        <input type="hidden" name="id" value="<?php echo $jogo['id']; ?>">
+                        <button type="submit">Ver Mais</button>
+                    </form>
                 </div>
-            </div>
-        </section>
+            <?php endforeach; ?>
+        </div>
     </main>
-    
     <footer>
         <div class="container">
             <div class="footer-left">
@@ -45,4 +58,5 @@
         </div>
     </footer>
 </body>
+
 </html>

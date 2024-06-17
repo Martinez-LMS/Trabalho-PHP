@@ -22,7 +22,7 @@
             <?php foreach ($jogos as $jogo): ?>
                 <div class="game-card">
                     <div class="heart-circle">
-                        <i class="fa-regular fa-heart" style="color: red;"></i>
+                        <i class="fa-regular fa-heart" style="color: red;" ></i>
                     </div>
                     <div class="image">
                         <img src="<?php echo $jogo['imageUrl']; ?>" alt="<?php echo $jogo['name']; ?>">
