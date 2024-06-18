@@ -10,7 +10,11 @@
 <body>
 <?php require_once "PHP/header.php"; ?>
 
-    
+    <?php 
+        require_once "PHP/banco.php";
+
+        $jogos = buscaFeatures();
+    ?>
     <main>
         <section class="hero">
             <div class="video-container">
@@ -35,38 +39,38 @@
                     <h2>OS JOGOS MAIS POPULARES SOBRE LUTA E GUERRA</h2>
                 </div>
                 <div class="game-cards">
-                    <div class="game-card">
-                        <div class="heart-circle">
-                            <img src="" alt="">
-                        </div>                        
-                        <div class="image"></div>
-                        <div class="title">Image Title</div>
-                        <div class="desc">Description</div>
-                    </div>
-                    <div class="game-card">
-                        <div class="heart-circle">
-                            <img src="" alt="">
-                        </div>                        
-                        <div class="image"></div>
-                        <div class="title">Image Title</div>
-                        <div class="desc">Description</div>
-                    </div>
-                    <div class="game-card">
-                        <div class="heart-circle">
-                            <img src="" alt="">
-                        </div>                        
-                        <div class="image"></div>
-                        <div class="title">Image Title</div>
-                        <div class="desc">Description</div>
-                    </div>
-                    <div class="game-card">
-                        <div class="heart-circle">
-                            <img src="" alt="">
-                        </div>                        
-                        <div class="image"></div>
-                        <div class="title">Image Title</div>
-                        <div class="desc">Description</div>
-                    </div>
+                <?php foreach ($jogos as $jogo): ?>
+            <div class="game-card">
+                <div class="heart-circle">
+                    <form action="" method="post">
+                        <input type="hidden" name="game_id" value="<?php echo $jogo['id']; ?>">
+                        <button type="submit">
+                            <?php 
+                            
+                            $usuario_id = $_SESSION['usuario']; 
+                            $gameFav_id = $jogo['id'];
+                            $isFav = verificarFavorito($usuario_id, $gameFav_id);
+                            if ($isFav == true){
+                                echo '<i class="fa-solid fa-heart" style="color: red;"></i>';
+                            }else{
+                                echo '<i class="fa-regular fa-heart" style="color: red;"></i>';
+                            };
+                            ?>
+                            
+                        </button>
+                    </form>
+                </div>
+                <div class="image">
+                    <img src="<?php echo $jogo['imageUrl']; ?>" alt="<?php echo $jogo['name']; ?>">
+                </div>
+                <div class="title"><?php echo $jogo['name']; ?></div>
+                <div class="desc">R$<?php echo $jogo['price']; ?></div>
+                <form action="PHP/gameDetail.php" method="GET">
+                    <input type="hidden" name="id" value="<?php echo $jogo['id']; ?>">
+                    <button type="submit">Ver Mais</button>
+                </form>
+            </div>
+        <?php endforeach; ?>
                 </div>
             </div>
         </section>

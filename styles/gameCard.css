@@ -26,7 +26,6 @@
     position: absolute;
     width: 2rem;
     height: 2rem;
-    background-color: #ffffff9a;
     border-radius: 50%;
     top: 10px;
     right: 10px;
@@ -38,17 +37,10 @@
     z-index: 99;
 }
 
-.game-card .heart-circle:hover {
-    background: #fff;
-}
 
 .game-card .heart-circle i {
     font-size: 1rem;
     color: red;
-}
-
-.game-card .heart-circle:hover i {
-    opacity: 0.8;
 }
 
 .game-card .image {

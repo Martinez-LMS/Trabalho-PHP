@@ -1,3 +1,14 @@
+<?php
+require_once "banco.php";
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['delete_id'])) {
+    $deleteId = $_POST['delete_id'];
+    deletarJogo($deleteId);
+}
+
+$jogos = buscaJogos(); 
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -60,6 +71,10 @@
             color: #0056b3;
         }
 
+        .game-actions form {
+            display: inline;
+        }
+
         .btn-cadastrar {
             background-color: #000;
             color: #fff;
@@ -75,16 +90,23 @@
         .btn-cadastrar:hover {
             background-color: #0056b3;
         }
+
+        .delete-button {
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .delete-button:hover {
+            background-color: #c82333;
+        }
     </style>
 </head>
 <body>
     <?php require_once "../PHP/header.php"; ?>
-
-    <?php
-    require_once "banco.php";
-
-    $jogos = buscaJogos(); 
-    ?>
 
     <main>
         <div class="game-container">
@@ -98,7 +120,10 @@
                                 <h2><?php echo htmlspecialchars($jogo['name']); ?></h2>
                                 <div class="game-actions">
                                     <a href="editar_jogo.php?id=<?php echo $jogo['id']; ?>">Editar</a>
-                                    <a href="deletar_jogo.php?id=<?php echo $jogo['id']; ?>">Excluir</a>
+                                    <form method="POST" action="">
+                                        <input type="hidden" name="delete_id" value="<?php echo $jogo['id']; ?>">
+                                        <button type="submit" class="delete-button">Excluir</button>
+                                    </form>
                                 </div>
                             </div>
                         </li>

@@ -1,3 +1,18 @@
+<?php require_once "../PHP/header.php"; ?>
+
+<?php
+$usuario_id = $_SESSION['usuario'];
+require_once "banco.php";
+$jogosFavIds = buscarFavoritos($usuario_id);
+$jogos = [];
+foreach ($jogosFavIds as $fav) {
+    $jogo = buscarJogoPorId($fav['game_id']);
+    if ($jogo && isset($jogo['name']) && isset($jogo['description'])) {
+        $jogos[] = $jogo;
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="pt">
 
@@ -12,22 +27,12 @@
 </head>
 
 <body>
-    <?php require_once "../PHP/header.php"; ?>
-
-
-
-    <?php
-    require_once "banco.php";
-
-    $jogos = buscaJogos();
-    ?>
     <div class="game-cards">
         <h1>Meus Jogos Favoritos</h1>
     </div>
 
     <main>
         <div class="game-cards">
-
             <?php foreach ($jogos as $jogo): ?>
                 <div class="game-card">
                     <div class="image">
@@ -43,6 +48,7 @@
             <?php endforeach; ?>
         </div>
     </main>
+
     <footer>
         <div class="container">
             <div class="footer-left">

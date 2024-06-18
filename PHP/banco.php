@@ -1,58 +1,64 @@
 <?php
 $banco = new mysqli("localhost:3306", "root", "", "gamehub");
 
-function createOnDB($into, $values)
-{
-    global $banco;
-    $q = "INSERT INTO $into VALUES $values";
-    $banco->query($q);
+if ($banco->connect_error) {
+    die("Erro de conexão com o banco de dados: " . $banco->connect_error);
 }
 
-function criarUsuario(string $username , string $email, string $password, $debug = false): void
+function criarUsuario(string $username, string $email, string $password, $isAdmin = false): bool
 {
     global $banco;
 
     $password = password_hash($password, PASSWORD_DEFAULT);
+    $isAdmin = $isAdmin ? 1 : 0;
 
-    $q = "INSERT INTO users (username, email, password) VALUES ('$username', '$email', '$password')";
-
-    $resp = $banco->query($q);
-
-    if ($debug) {
-        echo "<br> Query: $q";
-        echo var_dump($resp);
-    }
+    $query = "INSERT INTO users (username, email, password, isAdmin) VALUES ('$username', '$email', '$password', $isAdmin)";
+    return $banco->query($query);
 }
 
-function buscaJogos() : array 
+function buscarUsuarioPorId($id)
 {
     global $banco;
 
-    $q = "SELECT * FROM games";
-    $result = $banco->query($q);
+    $query = "SELECT * FROM users WHERE id = $id";
+    $result = $banco->query($query);
+
+    if ($result && $result->num_rows > 0) {
+        return $result->fetch_assoc();
+    } else {
+        return null;
+    }
+}
+
+function buscaJogos(): array
+{
+    global $banco;
+
+    $query = "SELECT * FROM games";
+    $result = $banco->query($query);
 
     $jogos = array();
 
     if ($result && $result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
-            $jogos[] = $row; 
+            $jogos[] = $row;
         }
     }
 
     return $jogos;
 }
 
-function buscarJogoPorId($id) {
+function buscarJogoPorId($id)
+{
     global $banco;
 
-    $id = $banco->real_escape_string($id);
-    $q = "SELECT * FROM games WHERE id = $id";
-    $result = $banco->query($q);
+    $query = "SELECT * FROM games WHERE id = $id";
+    $result = $banco->query($query);
 
     if ($result && $result->num_rows > 0) {
         return $result->fetch_assoc();
     } else {
-        return null; 
+        return null;
     }
 }
 
@@ -60,40 +66,14 @@ function cadastrarJogo($name, $description, $imageUrl, $videoUrl, $price, $produ
 {
     global $banco;
 
-    $name = $banco->real_escape_string($name);
-    $description = $banco->real_escape_string($description);
-    $imageUrl = $banco->real_escape_string($imageUrl);
-    $videoUrl = $banco->real_escape_string($videoUrl);
-    $price = $banco->real_escape_string($price);
-    $producer = $banco->real_escape_string($producer);
-    $language = $banco->real_escape_string($language);
-    $isHero = $isHero ? 1 : 0; 
-    $isFeatured = $isFeatured ? 1 : 0; 
-
     $query = "INSERT INTO games (name, description, imageUrl, videoUrl, price, producer, language, isHero, isFeatured) 
               VALUES ('$name', '$description', '$imageUrl', '$videoUrl', '$price', '$producer', '$language', '$isHero', '$isFeatured')";
-
-    if ($banco->query($query) === TRUE) {
-        return true; 
-    } else {
-        return false; 
-    }
+    return $banco->query($query);
 }
 
 function atualizarJogo($id, $name, $description, $imageUrl, $videoUrl, $price, $producer, $language, $isHero, $isFeatured)
 {
     global $banco;
-
-    $id = $banco->real_escape_string($id);
-    $name = $banco->real_escape_string($name);
-    $description = $banco->real_escape_string($description);
-    $imageUrl = $banco->real_escape_string($imageUrl);
-    $videoUrl = $banco->real_escape_string($videoUrl);
-    $price = $banco->real_escape_string($price);
-    $producer = $banco->real_escape_string($producer);
-    $language = $banco->real_escape_string($language);
-    $isHero = $isHero ? 1 : 0; 
-    $isFeatured = $isFeatured ? 1 : 0; 
 
     $query = "UPDATE games SET 
               name = '$name', 
@@ -106,25 +86,107 @@ function atualizarJogo($id, $name, $description, $imageUrl, $videoUrl, $price, $
               isHero = '$isHero', 
               isFeatured = '$isFeatured' 
               WHERE id = '$id'";
+    return $banco->query($query);
+}
 
-    if ($banco->query($query) === TRUE) {
+function deletarJogo($id): void
+{
+    global $banco;
+
+    $query = "DELETE FROM games WHERE id = $id";
+    $banco->query($query);
+}
+
+function adicionarAosFavoritos($userId, $gameId): void
+{
+    global $banco;
+
+    $query = "SELECT * FROM favorites WHERE user_id = $userId AND game_id = $gameId";
+    $result = $banco->query($query);
+
+    if ($result->num_rows > 0) {
+        $query = "DELETE FROM favorites WHERE user_id = $userId AND game_id = $gameId";
+    } else {
+        $query = "INSERT INTO favorites (user_id, game_id) VALUES ($userId, $gameId)";
+    }
+
+    $banco->query($query);
+}
+
+function verificarFavorito($userId, $gameId): bool
+{
+    global $banco;
+
+    $query = "SELECT * FROM favorites WHERE user_id = $userId AND game_id = $gameId";
+    $result = $banco->query($query);
+
+    return $result->num_rows > 0;
+}
+
+function adicionarAoCarrinho($userId, $gameId): bool
+{
+    global $banco;
+
+    $query = "SELECT * FROM cart WHERE user_id = $userId AND game_id = $gameId";
+    $result = $banco->query($query);
+
+    if ($result->num_rows > 0) {
+        $query = "DELETE FROM cart WHERE user_id = $userId AND game_id = $gameId";
+    } else {
+        $query = "INSERT INTO cart (user_id, game_id) VALUES ($userId, $gameId)";
+    }
+
+    if ($banco->query($query)) {
         return true; 
     } else {
         return false;
     }
 }
 
-
-function deletarJogo($id) : void
+function verificarCarrinho($userId, $gameId): bool
 {
     global $banco;
 
-    $id = $banco->real_escape_string($id);
+    $query = "SELECT * FROM cart WHERE user_id = $userId AND game_id = $gameId";
+    $result = $banco->query($query);
 
-    $q = "DELETE FROM games WHERE id = $id";
-    $banco->query($q);
+    return $result->num_rows > 0;
+}
 
-    header("Location: ../../area_admin.php");
-    exit;
+function buscarFavoritos($userId): Array
+{
+    global $banco;
+
+    $query = "SELECT * FROM favorites WHERE user_id = $userId";
+    $result = $banco->query($query);
+
+    $jogos = array();
+
+    if ($result && $result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $jogos[] = $row;
+        }
+    }
+
+    return $jogos;
+}
+
+
+function buscaFeatures() : Array
+{
+    global $banco;
+
+    $query = "SELECT * FROM games WHERE isFeatured = true LIMIT 4";
+    $result = $banco->query($query);
+
+    $jogos = array();
+
+    if ($result && $result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $jogos[] = $row;
+        }
+    }
+
+    return $jogos;
 }
 ?>

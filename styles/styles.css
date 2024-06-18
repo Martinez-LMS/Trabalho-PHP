@@ -23,6 +23,23 @@ body {
     align-items: center;
 }
 
+.user-name{
+    margin-top: 0.2rem;
+    font-size: 25px;
+}
+
+.carts{
+    display: flex;
+    height: 100%;
+    align-items: center;
+    margin-right: 40px;
+    list-style-type: none;
+    width: 3vw;
+    font-size: large;
+    justify-content: space-between;
+}
+
+
 
 header {
     background-color: #000;
