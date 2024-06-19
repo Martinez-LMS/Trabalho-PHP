@@ -1,13 +1,13 @@
-<?php require_once "../PHP/header.php"; ?>
-
 <?php
-$usuario_id = $_SESSION['usuario'];
+$usuario_id = $_SESSION['usuario']; 
 require_once "banco.php";
-$jogosFavIds = buscarFavoritos($usuario_id);
+
+$jogosCarrinho = buscaCarrinho($usuario_id);
 $jogos = [];
-foreach ($jogosFavIds as $fav) {
-    $jogo = buscarJogoPorId($fav['game_id']);
-    if ($jogo && isset($jogo['name']) && isset($jogo['description'])) {
+
+foreach ($jogosCarrinho as $item) {
+    $jogo = buscarJogoPorId($item['game_id']);
+    if ($jogo && isset($jogo['name'])) {
         $jogos[] = $jogo;
     }
 }
@@ -19,7 +19,7 @@ foreach ($jogosFavIds as $fav) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Favoritos - GameHub</title>
+    <title>Carrinho - GameHub</title>
     <link rel="stylesheet" href="../../Trabalho-PHP/styles/login-styles.css">
     <link rel="stylesheet" href="../../Trabalho-PHP/styles/styles.css">
     <link rel="stylesheet" href="../../Trabalho-PHP/styles/gameCard.css">
@@ -27,40 +27,39 @@ foreach ($jogosFavIds as $fav) {
 </head>
 
 <body>
-    <div class="game-cards">
-        <h1>Meus Jogos Favoritos</h1>
-    </div>
+    <?php require_once "../PHP/header.php"; ?>
 
     <main>
-        <div class="game-cards">
-            <?php foreach ($jogos as $jogo): ?>
-                <div class="game-card">
-                    <div class="image">
-                        <img src="<?php echo $jogo['imageUrl']; ?>" alt="<?php echo $jogo['name']; ?>">
-                    </div>
-                    <div class="title"><?php echo $jogo['name']; ?></div>
-                    <div class="desc"><?php echo $jogo['description']; ?></div>
-                    <form action="gameDetail.php" method="GET">
-                        <input type="hidden" name="id" value="<?php echo $jogo['id']; ?>">
-                        <button type="submit">Ver Mais</button>
-                    </form>
+        <section class="cart-items">
+            <div class="container-main">
+                <h2>Carrinho de Compras</h2>
+                <div class="game-cards">
+                    <?php if (empty($jogos)): ?>
+                        <p>Nenhum jogo encontrado no carrinho.</p>
+                    <?php else: ?>
+                        <?php foreach ($jogos as $jogo): ?>
+                            <div class="game-card">
+                                <div class="image">
+                                    <img src="<?php echo $jogo['imageUrl']; ?>" alt="<?php echo $jogo['name']; ?>">
+                                </div>
+                                <div class="title"><?php echo $jogo['name']; ?></div>
+                                <div class="desc"><?php echo $jogo['description']; ?></div>
+                            </div>
+                        <?php endforeach; ?>
+                    <?php endif; ?>
                 </div>
-            <?php endforeach; ?>
-        </div>
+                <button class="checkout-button">Finalizar Compra</button>
+            </div>
+        </section>
     </main>
 
-    <footer>
-        <div class="container">
-            <div class="footer-left">
-                <div class="logo">GameHub</div>
-                <p>All right reserved &copy; GameHub 2024</p>
-            </div>
-            <div class="footer-right">
-                <ul>
-                    <li><a href="#">Contact Us</a></li>
-                    <li><a href="#">Privacy Policy</a></li>
-                </ul>
-            </div>
+    <footer class="footer-main">
+        <div class="container-main">
+            <p>All right reserved &copy; GameHub 2024</p>
+            <ul>
+                <li><a href="#">Contact Us</a></li>
+                <li><a href="#">Privacy Policy</a></li>
+            </ul>
         </div>
     </footer>
 </body>

@@ -33,7 +33,7 @@
             cursor: pointer;
             transition: background-color 0.3s ease;
             margin-top: 20px;
-            display: block; /
+            display: block;
             width: 100%;
         }
 
@@ -42,34 +42,31 @@
         }
     </style>
 </head>
-
-<?php 
-    session_start();
-    $usuario_id = $_SESSION['usuario']; 
-    require_once "banco.php";
-
-
-    $jogos = buscaCarrinho($usuario_id);
-?>
-
 <body>
     <?php require_once "../PHP/header.php"; ?>
     
     <main>
         <section class="cart-items">
-       
             <div class="container-main">
                 <h2>Carrinho de Compras</h2>
                 <div class="game-cards">
-                    <?php foreach ($jogos as $jogo): ?>
-                        <div class="game-card">
-                        <div class="image">
-                            <img src="<?php echo $jogo['imageUrl']; ?>" alt="<?php echo $jogo['name']; ?>">
-                        </div>
-                        <div class="title"><?php echo $jogo['name']; ?></div>
-                        <div class="desc">R$<?php echo $jogo['price']; ?></div>
-                    </div>
-                    <?php endforeach; ?>
+                    <?php if (!empty($jogos)): ?>
+                        <?php foreach ($jogos as $jogo): ?>
+                            <?php 
+                            $jogoa = buscarJogoPorId($jogo['game_id']);
+                            if ($jogoa): ?>
+                                <div class="game-card">
+                                    <div class="image">
+                                        <img src="<?php echo $jogoa['imageUrl']; ?>" alt="<?php echo $jogoa['name']; ?>">
+                                    </div>
+                                    <div class="title"><?php echo $jogoa['name']; ?></div>
+                                    <div class="desc">R$<?php echo $jogoa['price']; ?></div>
+                                </div>
+                            <?php endif; ?>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <p>Nenhum jogo encontrado no carrinho.</p>
+                    <?php endif; ?>
                 </div>
                 <button class="checkout-button">Finalizar Compra</button>
             </div>

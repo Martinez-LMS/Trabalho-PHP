@@ -190,8 +190,7 @@ function buscaFeatures() : Array
     return $jogos;
 }
 
-function buscaUm(): object
- {
+function buscaUm() {
     global $banco;
 
     $query = "SELECT * FROM games WHERE isHero = true ORDER BY RAND() LIMIT 1;";
@@ -208,21 +207,8 @@ function buscaUm(): object
     return $jogo;
 }
 
-function buscaCarrinho($userId): Array
+function buscaCarrinho(): Array
 {
-    global $banco;
-
-    $query = "SELECT * FROM cart WHERE user_id = $userId";
-    $result = $banco->query($query);
-
-    $jogos = array();
-
-    if ($result && $result->num_rows > 0) {
-        while ($row = $result->fetch_assoc()) {
-            $jogos[] = $row;
-        }
-    }
-
-    return $jogos;
+    
 }
 ?>
