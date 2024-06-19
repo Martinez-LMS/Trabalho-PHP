@@ -1,20 +1,14 @@
 <?php
 require_once "banco.php";
 
-// Verifica se o ID do jogo foi passado via GET
 if (!isset($_GET['id'])) {
-    // Caso não tenha sido passado, redireciona para página de erro ou tratamento adequado
     header("Location: error.php");
     exit();
 }
-
-// Obtém o ID do jogo da URL
 $id = $_GET['id'];
 
-// Busca as informações do jogo pelo ID
 $jogo = buscarJogoPorId($id);
 
-// Verifica se o usuário está logado (supondo que 'usuario' seja o índice da sessão para o ID do usuário)
 $userId = isset($_SESSION['usuario']) ? $_SESSION['usuario'] : null;
 ?>
 
@@ -30,7 +24,7 @@ $userId = isset($_SESSION['usuario']) ? $_SESSION['usuario'] : null;
         .game-video-container {
             position: relative;
             width: 100%;
-            padding-top: 56.25%; /* Proporção 16:9 */
+            padding-top: 56.25%;
         }
         .game-video-title {
             position: relative;
@@ -83,9 +77,7 @@ $userId = isset($_SESSION['usuario']) ? $_SESSION['usuario'] : null;
                 <p class="language">Idioma: <?php echo htmlspecialchars($jogo['language']); ?></p>
                 <p class="price">R$<?php echo number_format($jogo['price'], 2); ?></p>
                 
-                <!-- Botões -->
                 <div class="game-buttons">
-                    <!-- Botão para adicionar ao carrinho -->
                     <form action="add_to_cart.php" method="post">
                         <input type="hidden" name="game_id" value="<?php echo htmlspecialchars($jogo['id']); ?>">
                         <button class="border-black" type="submit">
@@ -102,7 +94,6 @@ $userId = isset($_SESSION['usuario']) ? $_SESSION['usuario'] : null;
                             </button>
                     </form>
                     
-                    <!-- Botão para adicionar aos favoritos -->
                     <form action="add_to_favorites.php" method="post">
                         <input type="hidden" name="game_id" value="<?php echo htmlspecialchars($jogo['id']); ?>">
                         <button class="black-background" type="submit">

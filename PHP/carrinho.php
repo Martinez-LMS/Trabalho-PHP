@@ -6,43 +6,83 @@
     <title>Carrinho - GameHub</title>
     <link rel="stylesheet" href="../../Trabalho-PHP/styles/login-styles.css">
     <link rel="stylesheet" href="../../Trabalho-PHP/styles/styles.css">
-</head>
-<body>
-<?php require_once "../PHP/header.php"; ?>
+    <link rel="stylesheet" href="../../Trabalho-PHP/styles/gameCard.css">
+    <style>
+        .container-main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
 
+        .cart-items {
+            background-color: #fff;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .checkout-button {
+            background-color: #f56c2d;
+            color: #fff;
+            border: none;
+            padding: 12px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 20px;
+            display: block; /
+            width: 100%;
+        }
+
+        .checkout-button:hover {
+            background-color: #e55b1f;
+        }
+    </style>
+</head>
+
+<?php 
+    session_start();
+    $usuario_id = $_SESSION['usuario']; 
+    require_once "banco.php";
+
+
+    $jogos = buscaCarrinho($usuario_id);
+?>
+
+<body>
+    <?php require_once "../PHP/header.php"; ?>
     
     <main>
-        <section class="cart-games">
-            <div class="container">
+        <section class="cart-items">
+       
+            <div class="container-main">
                 <h2>Carrinho de Compras</h2>
                 <div class="game-cards">
-                    <!-- Exemplo de jogo no carrinho -->
-                    <div class="game-card">
-                        <div class="heart-circle">
-                            <img src="" alt="">
-                        </div>                        
-                        <div class="image"></div>
-                        <div class="title">Nome do Jogo no Carrinho</div>
-                        <div class="desc">Descrição do Jogo no Carrinho</div>
+                    <?php foreach ($jogos as $jogo): ?>
+                        <div class="game-card">
+                        <div class="image">
+                            <img src="<?php echo $jogo['imageUrl']; ?>" alt="<?php echo $jogo['name']; ?>">
+                        </div>
+                        <div class="title"><?php echo $jogo['name']; ?></div>
+                        <div class="desc">R$<?php echo $jogo['price']; ?></div>
                     </div>
+                    <?php endforeach; ?>
                 </div>
-                <button class="checkout-btn">Finalizar Compra</button>
+                <button class="checkout-button">Finalizar Compra</button>
             </div>
         </section>
     </main>
     
-    <footer>
-        <div class="container">
-            <div class="footer-left">
-                <div class="logo">GameHub</div>
-                <p>All right reserved &copy; GameHub 2024</p>
-            </div>
-            <div class="footer-right">
-                <ul>
-                    <li><a href="#">Contact Us</a></li>
-                    <li><a href="#">Privacy Policy</a></li>
-                </ul>
-            </div>
+    <footer class="footer-main">
+        <div class="container-main">
+            <p>All right reserved &copy; GameHub 2024</p>
+            <ul>
+                <li><a href="#">Contact Us</a></li>
+                <li><a href="#">Privacy Policy</a></li>
+            </ul>
         </div>
     </footer>
 </body>

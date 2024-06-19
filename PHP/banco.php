@@ -176,7 +176,43 @@ function buscaFeatures() : Array
 {
     global $banco;
 
-    $query = "SELECT * FROM games WHERE isFeatured = true LIMIT 4";
+    $query = "SELECT * FROM games WHERE isFeatured = true ORDER BY RAND() LIMIT 4";
+    $result = $banco->query($query);
+
+    $jogos = array();
+
+    if ($result && $result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $jogos[] = $row;
+        }
+    }
+
+    return $jogos;
+}
+
+function buscaUm(): object
+ {
+    global $banco;
+
+    $query = "SELECT * FROM games WHERE isHero = true ORDER BY RAND() LIMIT 1;";
+    $result = $banco->query($query);
+
+    $jogo = array();
+
+    if ($result && $result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $jogo[] = $row;
+        }
+    }
+
+    return $jogo;
+}
+
+function buscaCarrinho($userId): Array
+{
+    global $banco;
+
+    $query = "SELECT * FROM cart WHERE user_id = $userId";
     $result = $banco->query($query);
 
     $jogos = array();
